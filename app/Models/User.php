@@ -20,6 +20,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'firstname',
+        'lastname',
+        'telephone',
+        'Identification_document',
+        'Birthdate',
+        'id_estate',
+        'id_municipality',
+        'id_parishes',
     ];
 
     /**
@@ -40,4 +48,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function state()
+    {
+        return $this->belongsTo(States::class, 'id_estate');
+    }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Municipalitys::class, 'id_municipality');
+    }
+
+    //Relationship Many to One
+    public function parishe()
+    {
+        return $this->belongsTo(Parishes::class, 'id_parishes');
+    }
 }

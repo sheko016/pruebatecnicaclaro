@@ -16,7 +16,7 @@ class AddFieldUsersAddresFullTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('id_estate')->after('Birthdate');
             $table->unsignedBigInteger('id_municipality')->after('id_estate');
-            $table->unsignedBigInteger('id_parishe')->after('id_municipality');
+            $table->unsignedBigInteger('id_parishes')->after('id_municipality');
             $table->foreign('id_estate')
                 ->references('id')->on('states')
                 ->onDelete('no action')
@@ -25,7 +25,7 @@ class AddFieldUsersAddresFullTable extends Migration
                 ->references('id')->on('municipalitys')
                 ->onDelete('no action')
                 ->onUpdate('no action');
-            $table->foreign('id_parishe')
+            $table->foreign('id_parishes')
                 ->references('id')->on('parishes')
                 ->onDelete('no action')
                 ->onUpdate('no action');

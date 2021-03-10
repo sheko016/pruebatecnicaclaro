@@ -16,7 +16,7 @@ class AdFieldUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('firstname', 100)->after('email');
             $table->string('lastname', 100)->after('firstname');
-            $table->string('telephone', 11)->after('lastname');
+            $table->string('telephone', 14)->after('lastname');
             $table->string('Identification_document', 11)->after('telephone')->unique();
             $table->date('Birthdate')->after('Identification_document');
         });
