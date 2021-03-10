@@ -17,8 +17,8 @@ class AdFieldUsersTable extends Migration
             $table->string('firstname', 100)->after('email');
             $table->string('lastname', 100)->after('firstname');
             $table->string('telephone', 14)->after('lastname');
-            $table->string('Identification_document', 11)->after('telephone')->unique();
-            $table->date('Birthdate')->after('Identification_document');
+            $table->string('identification_document', 11)->after('telephone')->unique();
+            $table->date('birthdate')->after('Identification_document');
         });
     }
 

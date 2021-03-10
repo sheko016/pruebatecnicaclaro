@@ -29,8 +29,8 @@ class UserFactory extends Factory
             'firstname' => $this->faker->firstName,
             'lastname' => $this->faker->lastName,
             'telephone' => $this->faker->e164PhoneNumber,
-            'Identification_document' => $this->faker->unique()->numberBetween($min = 1000000, $max = 9999999999),
-            'Birthdate' => $this->faker->dateTimeBetween($startDate = '-15 years', $endDate = 'now', $timezone = null),
+            'identification_document' => $this->faker->unique()->numberBetween($min = 1000000, $max = 9999999999),
+            'birthdate' => $this->faker->dateTimeBetween($startDate = '-15 years', $endDate = 'now', $timezone = null),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
