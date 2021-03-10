@@ -14,8 +14,13 @@ class CreateMunicipalitysTable extends Migration
     public function up()
     {
         Schema::create('municipalitys', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('name',100)->nullable();
+            $table->unsignedBigInteger('id_estate')->nullable();
             $table->timestamps();
+
+            $table->foreign('id_estate')
+                ->references('id')->on('states');
         });
     }
 
