@@ -73,7 +73,7 @@
 	              </td>
 	              <td class="px-6 py-4 whitespace-nowrap">
 	                <div class="text-sm text-gray-900">{{ $user->birthdate }}</div>
-	                <div class="text-sm text-gray-500">Optimization</div>
+	                <div class="text-sm text-gray-500"> {{ \Carbon\Carbon::parse($user->birthdate)->age }}</div>
 	              </td>
 	              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 	                {{ $user->state->name  }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\States;
 use Livewire\Component;
@@ -22,6 +23,7 @@ class UsersTable extends Component
 	public $updateUserIsOpemModal = false;
 	public $createUserIsOpemModal = false;
 	public $messageSatisfactory = "";
+	public $messageError = "";
 
 	public function openModalCreateUser()
 	{
@@ -30,7 +32,7 @@ class UsersTable extends Component
 
 	public function storeUser()
 	{
-
+		$this->messageError = "";
 		$this->validate([
             'firstname'   => 'required|max:100',
             'lastname'    => 'required|max:100',
@@ -42,7 +44,10 @@ class UsersTable extends Component
             'idMunicipality'    => 'required', 
             'idParishes'    => 'required', 
         ]);
-//dd($this->identificationDocument);
+
+        if (Carbon::parse($this->birthDate)->age <= 15) {
+        	return $this->messageError = "Para poder registrarse debe ser mayor a 15 años";
+        }
 
         User::create([
 			'firstname' => $this->firstname,
@@ -116,6 +121,10 @@ class UsersTable extends Component
             'idParishes'    => 'required', 
         ]);
 
+        if (Carbon::parse($this->birthDate)->age <= 15) {
+        	return $this->messageError = "Para poder registrarse debe ser mayor a 15 años";
+        }
+
         $user = User::findOrFail($this->update_user_id);
 		$user->firstname = $this->firstname;
 		$user->lastname = $this->lastname;
@@ -158,12 +167,11 @@ class UsersTable extends Component
 		$this->createUserIsOpemModal = false;
 		$this->error = "";
 		$this->messageSatisfactory = "";
+		$this->messageError = "";
 		$this->resetErrorBag();
     	$this->resetValidation();
     	$this->resetInput();
 	}
-
-
 
     public function render()
     {

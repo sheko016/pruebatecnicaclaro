@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Parishes;
 use App\Models\Municipalitys;
@@ -19,6 +20,19 @@ class UsersSeeder extends Seeder
     {
 
     	for ($i=2; $i < 52; $i++) { 
+            
+            $date = Carbon::now();
+            $actual = $date->format('Y');
+            $calculosEdad = ($date->age);
+           
+            while ($calculosEdad <= 15) {
+                $year = rand(1950,$actual);
+                $mes = rand(1,12);
+                $dia = rand(1,28);
+                $Birthdate = "$year-$mes-$dia";
+                $calculosEdad = Carbon::parse($Birthdate)->age;
+                echo "la Edad es: ------ $calculosEdad --- \n";
+            } 
 
     		$state = rand(1,24);
     		echo "El ID de estado es: ------ $state --- \n";
@@ -29,13 +43,11 @@ class UsersSeeder extends Seeder
 
             $parroquia = Parishes::where('id_municipality', $municipio)->get();
             $parroquia = $parroquia->random()->id;
-            echo "El ID de parroquia es: --- $parroquia --- \n";
-
-
-            
+            echo "El ID de parroquia es: --- $parroquia --- \n";            
 
     		User::factory()->create([
 	        	'password'				=> Hash::make('user'),
+                'birthdate'             => $Birthdate,
 	        	'id_estate'				=> $state,
 				'id_municipality'		=> $municipio,
 				'id_parishes'			=> $parroquia
