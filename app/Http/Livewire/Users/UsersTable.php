@@ -18,12 +18,14 @@ class UsersTable extends Component
 
 	public $firstname, $lastname, $identificationDocument, $birthDate, $telephone, $email, $idState, $idMunicipality, $idParishes;
 	public $delete_user_id, $estado, $municipio, $parroquia, $update_user_id;
-
 	public $deleteUserIsOpemModal = false;
 	public $updateUserIsOpemModal = false;
 	public $createUserIsOpemModal = false;
 	public $messageSatisfactory = "";
 	public $messageError = "";
+	public $search;
+    public $sortField;
+    public $sortAsc = true;
 
 	public function openModalCreateUser()
 	{
@@ -173,6 +175,17 @@ class UsersTable extends Component
     	$this->resetInput();
 	}
 
+	public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortAsc = true;
+        }
+
+        $this->sortField = $field;
+    }
+
     public function render()
     {
         return view('livewire.users.users-table', [
@@ -180,6 +193,16 @@ class UsersTable extends Component
         	'SelectState' => States::all(),
             'SelectMunicipality' => Municipalitys::select('id','name')->where('id_estate', $this->idState)->get(),
             'SelectParishe' => Parishes::select('id','name')->where('id_municipality', $this->idMunicipality)->get(),
+            'users' => User::where(function ($query) {
+                $query->where('firstname', 'like', '%' . $this->search . '%')
+                    ->orWhere('lastname', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhere('Identification_document', 'like', '%' . $this->search . '%')
+                    ->orWhere('telephone', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->sortField, function ($query) {
+                $query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+            })->paginate(10),
         ]);
     }
 }

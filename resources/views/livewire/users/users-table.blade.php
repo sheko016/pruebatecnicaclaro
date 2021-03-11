@@ -2,7 +2,9 @@
 	<button wire:click="openModalCreateUser()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
 	  Crear Usuario
 	</button>
-	<br> <br>
+
+	<input wire:model="search" id="search" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="Buscar">
+	<br> 
 	<div class="flex flex-col">
 	  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 	    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -10,21 +12,24 @@
 	        <table class="min-w-full divide-y divide-gray-200">
 	          <thead class="bg-gray-50">
 	            <tr>
-	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-	                Nombre Completo
+	            	<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+	                <button wire:click="sortBy('id')" class="btn btn-light">ID </button>
 	              </th>
 	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-	                Correo
+	                <button wire:click="sortBy('firstname')" class="btn btn-light">Nombre Completo </button>
 	              </th>
 	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-	                Cedula
+	                <button wire:click="sortBy('email')" class="btn btn-light">Correo </button>
 	              </th>
 	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-	                Telefono
+	                <button wire:click="sortBy('identification_document')" class="btn btn-light">Cedula </button>
+	              </th>
+	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+	                <button wire:click="sortBy('telephone')" class="btn btn-light">Telefono </button>
 	              </th>
 
 	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-	                Fecha de nacimiento
+	                <button wire:click="sortBy('birthdate')" class="btn btn-light">Fecha de Nacimiento </button>
 	              </th>
 
 	              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -47,6 +52,9 @@
 	          <tbody class="bg-white divide-y divide-gray-200">
 	          	@foreach($users as $user)
 	            <tr>
+	            	<td class="px-6 py-4 whitespace-nowrap">
+	                  {{ $user->id }}
+	              	</td>
 	              <td class="px-6 py-4 whitespace-nowrap">
 	                <div class="flex items-center">
 	                  
