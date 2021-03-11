@@ -29,4 +29,8 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('usuarios', function () {
         return view('users.user-table');
     })->name('users-table');
+
+    Route::get('correos', function () {
+        return view('emails.email-table');
+    })->name('correos');
 });
