@@ -36,10 +36,10 @@
               <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
                   <h3 class="text-lg leading-6 font-medium text-gray-900">
-                    Eliminar Usuario
+                    Eliminar Usuario y los correos que envio el usuario
                   </h3>
                   <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                    Una ves eliminado no podra revertir la operación
+                    Una ves eliminado no podra revertir la operación y perdera todos los correos que envio el usuario
                   </p>
                 </div>
                 <div class="border-t border-gray-200">

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Emails;
 use App\Models\States;
 use Livewire\Component;
 use App\Models\Parishes;
@@ -87,9 +88,24 @@ class UsersTable extends Component
 
 	public function daleteUser()
 	{
+
 		if($this->delete_user_id){
-            User::where('id',$this->delete_user_id)->delete();
-            $this->messageSatisfactory = "El usuario fue eliminado correctamente";
+			$user = User::findOrFail($this->delete_user_id);
+
+			//dd($user->emailSend);
+
+			foreach ($user->emailSend as $key => $deleteEmails) {
+				$deleteEmails->destinoEmail()->detach();
+				$deleteEmails->delete();
+				
+			}
+			foreach ($user->emailDestination as $key => $deleteEmail) {
+				$deleteEmail->destinoEmail()->detach();
+				$deleteEmail->delete();
+			}		
+
+			$user->delete();
+            $this->messageSatisfactory = "El usuario fue eliminado correctamente, Y los Correo que creo el usario tambien fueron eliminados";
         }
 
         $this->resetInput();

@@ -66,8 +66,13 @@ class User extends Authenticatable
         return $this->belongsTo(Parishes::class, 'id_parishes');
     }
 
-    public function email()
+    public function emailDestination()
     {
         return $this->belongsToMany(Emails::class, 'destinationsemails', 'id_destinatario', 'id_email');
+    }
+
+    public function emailSend()
+    {
+        return $this->hasMany(Emails::class, 'id_user');
     }
 }
