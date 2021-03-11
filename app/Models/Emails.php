@@ -19,5 +19,10 @@ class Emails extends Model
     {
         return $this->belongsToMany(User::class, 'destinationsemails', 'id_email', 'id_destinatario');
     }
+
+    public function userSend()
+    {
+        return $this->hasMany(User::class, 'id', 'id_user');
+    }
 	
 }

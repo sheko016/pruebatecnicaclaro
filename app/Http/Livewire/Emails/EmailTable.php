@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\Emails;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Mail\NotificacionesEmail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EmailTable extends Component
 {
@@ -72,9 +74,6 @@ class EmailTable extends Component
         	'status'	=> $this->enviar,
         	'id_user'	=> auth()->user()->id,
         ]);
-
-
-
         $arrayDesEma = [];
         foreach ($this->destinatarios as $key => $destinoEmail) {
         	$arrayDesEma[] = [
@@ -84,12 +83,24 @@ class EmailTable extends Component
         }
 
         DB::table('destinationsemails')->insert($arrayDesEma);
+
+        if ($emailCreate->status) {
+	        foreach ($emailCreate->destinoEmail as $key => $send) {
+				Mail::to($send->email, $send->firstname . $send->lastname)
+	            	->send(new NotificacionesEmail($send->firstname, $send->lastname, $emailCreate->asunto, $emailCreate->mensaje, $emailCreate->userSend[0]->email, $emailCreate->userSend[0]->firstname, $emailCreate->userSend[0]->lastname));
+			}
+		}
         $this->resetInput();
 	}
 
 	public function sendEmail($id)
 	{
 		$sendEmail = Emails::findOrFail($id);
+		foreach ($sendEmail->destinoEmail as $key => $send) {
+			Mail::to($send->email, $send->firstname . $send->lastname)
+            	->send(new NotificacionesEmail($send->firstname, $send->lastname, $sendEmail->asunto, $sendEmail->mensaje, $sendEmail->userSend[0]->email, $sendEmail->userSend[0]->firstname, $sendEmail->userSend[0]->lastname));
+		}
+
 		$sendEmail->status = 1;
 		$sendEmail->save();
 
