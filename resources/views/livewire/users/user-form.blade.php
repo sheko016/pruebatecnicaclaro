@@ -52,6 +52,25 @@
     </div>
   </div>
 
+@if($createUserIsOpemModal)
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+        Clave
+      </label>
+      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-password" wire:model.lazy="password" type="text" placeholder="Jane">
+      @error('password') <p class="text-red-500 text-xs italic"> {{ $message }} </p> @enderror
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+        Repetir Clave
+      </label>
+      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password-confirm" wire:model.lazy="password_confirmation" type="text" placeholder="Doe">
+      @error('password_confirmation') <p class="text-red-500 text-xs italic"> {{ $message }} </p> @enderror
+    </div>
+  </div>
+  @endif
+
   <div class="flex flex-wrap -mx-3 mb-2">
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">

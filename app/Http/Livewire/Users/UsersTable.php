@@ -16,7 +16,7 @@ class UsersTable extends Component
 {
 	use WithPagination;
 
-	public $firstname, $lastname, $identificationDocument, $birthDate, $telephone, $email, $idState, $idMunicipality, $idParishes;
+	public $firstname, $lastname, $identificationDocument, $birthDate, $telephone, $email, $idState, $idMunicipality, $idParishes, $password, $password_confirmation;
 	public $delete_user_id, $estado, $municipio, $parroquia, $update_user_id;
 	public $deleteUserIsOpemModal = false;
 	public $updateUserIsOpemModal = false;
@@ -45,7 +45,10 @@ class UsersTable extends Component
             'idState'    => 'required', 
             'idMunicipality'    => 'required', 
             'idParishes'    => 'required', 
+            'password'		=> 'required|min:8|confirmed', //Google
+            'password_confirmation'		=> 'required|min:8', //Google
         ]);
+
 
         if (Carbon::parse($this->birthDate)->age <= 15) {
         	return $this->messageError = "Para poder registrarse debe ser mayor a 15 años";
@@ -55,7 +58,7 @@ class UsersTable extends Component
 			'firstname' => $this->firstname,
 			'lastname' => $this->lastname,
 			'email' => $this->email,
-			'password' => Hash::make('user'),
+			'password' => Hash::make($this->password),
 			'telephone' => $this->telephone,
 			'identification_document' => $this->identificationDocument,
 			'birthdate' => $this->birthDate,
@@ -121,6 +124,8 @@ class UsersTable extends Component
             'idState'    => 'required', 
             'idMunicipality'    => 'required', 
             'idParishes'    => 'required', 
+            //'password'		=> 'required|min:8|confirmed', //Google
+            //'password_confirmation'		=> 'required|min:8', //Google
         ]);
 
         if (Carbon::parse($this->birthDate)->age <= 15) {
@@ -131,6 +136,7 @@ class UsersTable extends Component
 		$user->firstname = $this->firstname;
 		$user->lastname = $this->lastname;
 		//$user->email = $this->email;
+		//$user->password = Hash::make($this->password);
 		$user->telephone = $this->telephone;
 		//$user->identification_document = $this->identificationDocument;
 		$user->birthdate = $this->birthDate;
@@ -160,6 +166,8 @@ class UsersTable extends Component
 		$this->estado  = null;
 		$this->municipio = null;
 		$this->parroquia = null;
+		$this->password_confirmation = null;
+		$this->password = null;
 	} 
 
 	public function closedModals()
