@@ -31,19 +31,19 @@ class UsersSeeder extends Seeder
                 $dia = rand(1,28);
                 $Birthdate = "$year-$mes-$dia";
                 $calculosEdad = Carbon::parse($Birthdate)->age;
-                echo "la Edad es: ------ $calculosEdad --- \n";
+                //echo "la Edad es: ------ $calculosEdad --- \n";
             } 
 
     		$state = rand(1,24);
-    		echo "El ID de estado es: ------ $state --- \n";
+    		//echo "El ID de estado es: ------ $state --- \n";
 
     		$municipio = Municipalitys::where('id_estate', $state)->get();
     		$municipio = $municipio->random()->id;
-    		echo "El ID de municipio es: --- $municipio --- \n";
+    		//echo "El ID de municipio es: --- $municipio --- \n";
 
             $parroquia = Parishes::where('id_municipality', $municipio)->get();
             $parroquia = $parroquia->random()->id;
-            echo "El ID de parroquia es: --- $parroquia --- \n";            
+            //echo "El ID de parroquia es: --- $parroquia --- \n";            
 
     		User::factory()->create([
 	        	'password'				=> Hash::make('user'),
@@ -53,7 +53,7 @@ class UsersSeeder extends Seeder
 				'id_parishes'			=> $parroquia
 	        ]);
 
-	        echo "---  $i --- \n";
+	        //echo "---  $i --- \n";
     	}
         
     }

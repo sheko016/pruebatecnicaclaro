@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
     	$this->call(AdminUserSeeder::class);
     	$this->call(UsersSeeder::class);
         $this->call(EmailsSeeder::class);
+        echo "El Usuario Administrador es: \n
+                User: admin@admin.com \n
+                clave: admin \n
+            ";
     }
 }
