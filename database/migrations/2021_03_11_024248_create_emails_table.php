@@ -17,7 +17,7 @@ class CreateEmailsTable extends Migration
             $table->bigIncrements('id');
             $table->string('asunto')->nullable();
             $table->string('mensaje')->nullable();
-            $table->boolean('status')->deault(0);
+            $table->boolean('status')->deault(false);
             $table->unsignedBigInteger('id_user')->nullable();
             $table->timestamps();
 

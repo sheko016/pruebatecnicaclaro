@@ -33,4 +33,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('correos', function () {
         return view('emails.email-table');
     })->name('correos');
+
+    Route::get('tiempo', function () {
+        return view('tiempo.api-tiempo');
+    })->name('tiempo');
 });

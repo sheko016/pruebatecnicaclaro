@@ -206,21 +206,39 @@ class EmailTable extends Component
 	}
     public function render()
     {
-        return view('livewire.emails.email-table', [
-        	'emails' => Emails::paginate(10),
-        	'users' => User::where(function ($query) {
-                $query->where('firstname', 'like', '%' . $this->search . '%')
-                    ->orWhere('lastname', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
-            })
-            ->get(),
+    	if (auth()->user()->is_admin) {
+	        return view('livewire.emails.email-table', [
+	        	'emails' => Emails::paginate(10),
+	            'emails' => Emails::where(function ($query) {
+	                $query->where('asunto', 'like', '%' . $this->search2 . '%')
+	                    ->orWhere('mensaje', 'like', '%' . $this->search2 . '%');
+	                    //->orWhere('email', 'like', '%' . $this->search . '%');
+	            })
+	            ->paginate(10),
+	            'users' => User::where(function ($query) {
+	                $query->where('firstname', 'like', '%' . $this->search . '%')
+	                    ->orWhere('lastname', 'like', '%' . $this->search . '%')
+	                    ->orWhere('email', 'like', '%' . $this->search . '%');
+	            })
+	            ->get(),
+	        ]);
+    	}else{
+    		return view('livewire.emails.email-table', [
+    			'emails' => Emails::where('id_user', auth()->user()->id)->paginate(10),
+    			/*'emails' => Emails::where(function ($query) {
+	                $query->where('id_user', "=", auth()->user()->id)
+	                	->orwhere('asunto', 'like', '%' . $this->search2 . '%')
+	                    ->orWhere('mensaje', 'like', '%' . $this->search2 . '%');
+	                    //->orWhere('email', 'like', '%' . $this->search . '%');
+	            })->paginate(10),*/
 
-            'emails' => Emails::where(function ($query) {
-                $query->where('asunto', 'like', '%' . $this->search2 . '%')
-                    ->orWhere('mensaje', 'like', '%' . $this->search2 . '%');
-                    //->orWhere('email', 'like', '%' . $this->search . '%');
-            })
-            ->paginate(10),
-        ]);
+	            'users' => User::where(function ($query) {
+	                $query->where('firstname', 'like', '%' . $this->search . '%')
+	                    ->orWhere('lastname', 'like', '%' . $this->search . '%')
+	                    ->orWhere('email', 'like', '%' . $this->search . '%');
+	            })
+	            ->get(),
+    		]);
+    	}
     }
 }
