@@ -27,6 +27,7 @@ class AdminUserSeeder extends Seeder
             'id_estate' 				=> 24,
             'id_municipality' 			=> 462,
             'id_parishes' 				=> 1122,
+            'is_admin'                  => 1,
             'created_at'        		=>	now(),
             'updated_at'        		=>	now(),
         ]);
