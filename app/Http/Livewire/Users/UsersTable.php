@@ -16,6 +16,7 @@ class UsersTable extends Component
 	use WithPagination;
 
 	public $firstname, $lastname, $identificationDocument, $birthDate, $telephone, $email, $idState, $idMunicipality, $idParishes;
+	public $delete_user_id, $estado, $municipio, $parroquia, $update_user_id;
 
 	public $deleteUserIsOpemModal = false;
 	public $updateUserIsOpemModal = false;
@@ -60,8 +61,82 @@ class UsersTable extends Component
 		$this->resetInput();
 	}
 
+	public function openModalDeleteUser($id)
+	{
+		$user = User::findOrFail($id);
+		$this->delete_user_id = $user->id;
+		$this->firstname = $user->firstname;
+		$this->lastname = $user->lastname;
+		$this->email = $user->email;
+		$this->identificationDocument = $user->identification_document;
+		$this->estado  = $user->state->name;
+		$this->municipio = $user->municipality->name;
+		$this->parroquia = $user->parishe->name;
+		$this->deleteUserIsOpemModal = true;
+	}
+
+	public function daleteUser()
+	{
+		if($this->delete_user_id){
+            User::where('id',$this->delete_user_id)->delete();
+            $this->messageSatisfactory = "El usuario fue eliminado correctamente";
+        }
+
+        $this->resetInput();
+	}
+
+	public function openModalUpdateUser($id)
+	{
+		$user = User::findOrFail($id);
+		$this->update_user_id = $user->id;
+		$this->firstname = $user->firstname;
+		$this->lastname = $user->lastname;
+		$this->email = $user->email;
+		$this->telephone = $user->telephone;
+		$this->identificationDocument = $user->identification_document;
+		$this->birthDate = $user->birthdate;
+		$this->password = $user->password;
+		$this->idState = $user->id_estate;
+		$this->idMunicipality = $user->id_municipality;
+		$this->idParishes = $user->id_parishes;
+		$this->updateUserIsOpemModal = true;
+	}
+
+	public function updateUser()
+	{
+		$this->validate([
+            'firstname'   => 'required|max:100',
+            'lastname'    => 'required|max:100',
+            //'identificationDocument'    => 'required|max:11|unique:users,identification_document',
+            'birthDate'    => 'required',
+            'telephone'    => 'required|min:8|max:14',
+            //'email'    => 'required|email|unique:users,email',
+            'idState'    => 'required', 
+            'idMunicipality'    => 'required', 
+            'idParishes'    => 'required', 
+        ]);
+
+        $user = User::findOrFail($this->update_user_id);
+		$user->firstname = $this->firstname;
+		$user->lastname = $this->lastname;
+		//$user->email = $this->email;
+		$user->telephone = $this->telephone;
+		//$user->identification_document = $this->identificationDocument;
+		$user->birthdate = $this->birthDate;
+		//$user->password = Hash::make($this->password);
+		$user->id_estate = $this->idState;
+		$user->id_municipality = $this->idMunicipality;
+		$user->id_parishes = $this->idParishes;
+		$user->save();
+
+		$this->messageSatisfactory = "El usuario fue actualizado correctamente";
+
+	}
+
 	public function resetInput()
 	{
+		$this->delete_user_id = null;
+		$this->update_user_id = null;
 		$this->firstname = null;
 		$this->lastname = null;
 		$this->identificationDocument = null;
@@ -71,18 +146,21 @@ class UsersTable extends Component
 		$this->idState = null;
 		$this->idMunicipality = null;
 		$this->idParishes = null;
+		$this->estado  = null;
+		$this->municipio = null;
+		$this->parroquia = null;
 	} 
 
 	public function closedModals()
 	{
-		 $this->resetErrorBag();
-    	$this->resetValidation();
 		$this->deleteUserIsOpemModal = false;
 		$this->updateUserIsOpemModal = false;
 		$this->createUserIsOpemModal = false;
-		$this->resetInput();
 		$this->error = "";
 		$this->messageSatisfactory = "";
+		$this->resetErrorBag();
+    	$this->resetValidation();
+    	$this->resetInput();
 	}
 
 

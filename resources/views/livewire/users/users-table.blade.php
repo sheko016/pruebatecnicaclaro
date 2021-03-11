@@ -85,7 +85,12 @@
 	                {{ $user->parishe->name  }}
 	              </td>
 	              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-	                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+	                <button wire:click="openModalUpdateUser({{ $user->id }})">
+	                	<i class="fas fa-user-edit"></i>
+	                </button>
+	                <button wire:click="openModalDeleteUser({{ $user->id }})">
+	                	<i class="fas fa-trash-alt"></i>
+	                </button>
 	              </td>
 	            </tr>
 	            @endforeach
@@ -102,4 +107,14 @@
 	@if($createUserIsOpemModal)
 		@include('livewire.users.user-modal')
 	@endif
+
+	@if($updateUserIsOpemModal)
+		@include('livewire.users.user-modal')
+	@endif
+
+	@if($deleteUserIsOpemModal)
+		@include('livewire.users.user-delete-modal')
+	@endif
+
+	
 </div>
